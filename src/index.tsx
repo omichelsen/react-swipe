@@ -1,30 +1,32 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Swipe from 'swipe-js-iso';
 import deepEqual from './deepEqual';
 
-class ReactSwipe extends Component {
-  static propTypes = {
-    swipeOptions: PropTypes.shape({
-      startSlide: PropTypes.number,
-      speed: PropTypes.number,
-      auto: PropTypes.number,
-      continuous: PropTypes.bool,
-      disableScroll: PropTypes.bool,
-      stopPropagation: PropTypes.bool,
-      swiping: PropTypes.func,
-      callback: PropTypes.func,
-      transitionEnd: PropTypes.func
-    }),
-    style: PropTypes.shape({
-      container: PropTypes.object,
-      wrapper: PropTypes.object,
-      child: PropTypes.object
-    }),
-    id: PropTypes.string,
-    className: PropTypes.string,
-    childCount: PropTypes.number
+export type ReactSwipeProps = {
+  swipeOptions?: {
+    startSlide?: number;
+    speed?: number;
+    auto?: number;
+    continuous?: boolean;
+    disableScroll?: boolean;
+    stopPropagation?: boolean;
+    swiping?: () => void;
+    callback?: () => void;
+    transitionEnd?: () => void;
   };
+  style?: {
+    container?: object;
+    wrapper?: object;
+    child?: object;
+  };
+  id?: string;
+  className?: string;
+  childCount?: number;
+};
+
+export default class ReactSwipe extends Component<ReactSwipeProps> {
+  containerEl: any;
+  swipe: any;
 
   static defaultProps = {
     swipeOptions: {},
@@ -32,28 +34,28 @@ class ReactSwipe extends Component {
       container: {
         overflow: 'hidden',
         visibility: 'hidden',
-        position: 'relative'
+        position: 'relative',
       },
       wrapper: {
         overflow: 'hidden',
-        position: 'relative'
+        position: 'relative',
       },
       child: {
         float: 'left',
         width: '100%',
         position: 'relative',
-        transitionProperty: 'transform'
-      }
+        transitionProperty: 'transform',
+      },
     },
     className: '',
-    childCount: 0
+    childCount: 0,
   };
 
   componentDidMount() {
     this.swipe = Swipe(this.containerEl, this.props.swipeOptions);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: ReactSwipeProps) {
     const { childCount, swipeOptions } = this.props;
     const shouldUpdateSwipeInstance =
       prevProps.childCount !== childCount ||
@@ -78,7 +80,7 @@ class ReactSwipe extends Component {
     this.swipe.prev();
   }
 
-  slide(...args) {
+  slide(...args: any[]) {
     this.swipe.slide(...args);
   }
 
@@ -96,19 +98,19 @@ class ReactSwipe extends Component {
     return (
       <div
         id={id}
-        ref={el => (this.containerEl = el)}
+        ref={(el) => (this.containerEl = el)}
         className={`react-swipe-container ${className}`}
-        style={style.container}
+        style={style?.container}
       >
-        <div style={style.wrapper}>
-          {React.Children.map(children, child => {
+        <div style={style?.wrapper}>
+          {React.Children.map(children, (child: any) => {
             if (!child) {
               return null;
             }
 
             const childStyle = child.props.style
-              ? { ...style.child, ...child.props.style }
-              : style.child;
+              ? { ...style?.child, ...child.props.style }
+              : style?.child;
 
             return React.cloneElement(child, { style: childStyle });
           })}
@@ -117,5 +119,3 @@ class ReactSwipe extends Component {
     );
   }
 }
-
-export default ReactSwipe;

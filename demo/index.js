@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import querystring from 'querystring';
-import ReactSwipe from '../src';
+import ReactSwipe from '../dist';
 
 const query = querystring.parse(window.location.search.slice(1));
 

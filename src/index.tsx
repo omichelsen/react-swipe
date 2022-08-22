@@ -3,7 +3,10 @@ import Swipe from 'swipe-js-iso';
 import deepEqual from './deepEqual';
 
 export type ReactSwipeProps = {
+  childCount?: number;
   children?: React.ReactNode;
+  className?: string;
+  id?: string;
   swipeOptions?: {
     startSlide?: number;
     speed?: number;
@@ -20,9 +23,6 @@ export type ReactSwipeProps = {
     wrapper?: object;
     child?: object;
   };
-  id?: string;
-  className?: string;
-  childCount?: number;
 };
 
 export default class ReactSwipe extends Component<ReactSwipeProps> {

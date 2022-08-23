@@ -3,6 +3,7 @@ import Swipe from 'swipe-js-iso';
 import deepEqual from './deepEqual';
 
 export type ReactSwipeProps = {
+  children?: React.ReactNode;
   swipeOptions?: {
     startSlide?: number;
     speed?: number;
